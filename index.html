@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gradual Looper</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Gradual Process Looper</h1>
+        <hr>
+        <p>Sample Name: {{ this.songName }}</p>
+        <p>Loop Start: {{ loopStart.toFixed(2) }}</p>
+        <p>Loop End: {{ loopEnd.toFixed(2) }}</p>
+        <label for="playbackRate">Right Channel Playback Rate:</label>
+        <input type="number" v-model="playbackRate" id="playbackRate">
+
+        <hr>
+        <br>
+        <!-- <button @click="something">Do Something</button> -->
+        <label for="fileSelect">Select Audio File:</label>
+        <input type="file" @change="handleFileInput" ref="fileInput" id="fileSelect">
+        <hr>
+
+        <button @click="onRecord">Start / Stop Record</button>
+
+        <div id="full-wave-div" ref="full"></div>
+
+        <div class="left-right-container">
+            <div id="left-wave-div" ref="left"></div>
+            <div id="right-wave-div" ref="right"></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/addons/p5.sound.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/addons/p5.dom.min.js"></script>
+
+    <script src="app.js"></script>
+</body>
+</html>
