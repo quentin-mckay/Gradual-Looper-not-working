@@ -26,6 +26,9 @@
 
         <button @click="onRecord">Start / Stop Record</button>
 
+        <label for="drawFade">Waveform Fade?</label>
+        <input type="checkbox" id="drawFade" v-model="drawFade">
+
         <div id="full-wave-div" ref="full"></div>
 
         <div class="left-right-container">

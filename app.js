@@ -5,7 +5,8 @@ const app = new Vue({
             songName: '',
             loopStart: 0,
             loopEnd: 0,
-            playbackRate: 1
+            playbackRate: 1,
+            drawFade: false
             // fullWave: null,
             // leftWave: null,
             // rightWave: null,
@@ -130,8 +131,10 @@ const app = new Vue({
                 // console.log(file.name)
                 // console.log(event.target.files[0])
                 let path = URL.createObjectURL(file.file)
-                console.log(path)
+                // console.log(path)
+
                 song.setPath(path, songLoaded)
+                // song = new p5.SoundFile(path, songLoaded, null, whileLoading)
             }
 
             const songLoaded = (loadedSong) => {
@@ -157,6 +160,10 @@ const app = new Vue({
                 drawWaveToGfx()
                 leftWave.drawWaveToGfx()
                 rightWave.drawWaveToGfx()
+            }
+
+            const whileLoading = (progress) => {    // progress is between 0 and 1
+                console.log(progress)
             }
 
             z.fileInput = (path) => {
@@ -249,7 +256,7 @@ const app = new Vue({
             z.mouseReleased = () => {  // global to the window
                 
                 if (isMouseDown) {  // if at the end of a drag
-                    console.log('..mouse was down')
+                    // console.log('..mouse was down')
                     let start = 48000 * this.loopStart
                     let end = 48000 * this.loopEnd
     
@@ -352,9 +359,9 @@ const app = new Vue({
             let canvas
             let waveGfx, markerGfx
 
-            let maskStyle = false
+            let maskStyle = true
             
-            let markerWidth = 20
+            let markerWidth = 60
 
             // using function() allows this.leftWave._userNode
             // fat arrow makes 'this' the vue instance
@@ -373,7 +380,7 @@ const app = new Vue({
 
             z.draw = () => {
                 // z.background('lime')
-                if (maskStyle) {
+                if (this.drawFade) {
                     z.background(0, 20)
 
                     drawMarkerToGfx()
@@ -392,7 +399,7 @@ const app = new Vue({
                     drawPositionMarker()
                 }
                 
-
+                // console.log(this)
 
             }
 
@@ -455,10 +462,13 @@ const app = new Vue({
             }
 
             z.windowResized = () => {
+                
                 z.resizeCanvas(...getDomDimensions())
-                gfx = z.createGraphics(...getDomDimensions())
+                waveGfx = z.createGraphics(...getDomDimensions())
+                markerGfx = z.createGraphics(...getDomDimensions())
 
                 z.drawWaveToGfx()
+                z.drawMarkerToGfx()
             }
 
             // ===== tests =====
